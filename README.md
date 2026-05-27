@@ -48,10 +48,12 @@ APK output: `app/build/outputs/apk/debug/app-debug.apk`
 ## Pengaturan Awal
 
 Sebelum menggunakan, isi **API Key Groq** di menu Pengaturan:
-1. Daftar/get API key di [console.groq.com](https://console.groq.com)
+1. Daftar gratis di [console.groq.com](https://console.groq.com) — dapatkan API key (Free Tier, tanpa kartu kredit)
 2. Buka Pengaturan di aplikasi (ikon gear)
 3. Masukkan API Key STT (dan LLM jika berbeda)
 4. Sesuaikan model jika perlu (default: `whisper-large-v3-turbo` / `llama-3-8b-instant`)
+
+> **Gratis.** Aplikasi ini berjalan penuh menggunakan Free Tier Groq API. Model default (`whisper-large-v3-turbo` untuk STT, `llama-3-8b-instant` untuk ringkasan) tersedia gratis tanpa perlu berlangganan. Batas rate limit Groq Free Tier lebih dari cukup untuk penggunaan meeting harian.
 
 ## Credits
 
