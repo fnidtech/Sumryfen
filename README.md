@@ -1,1 +1,58 @@
-# Sumryfen
+# Sumryfen — Perekam & Peringkas Meeting Otomatis
+
+Aplikasi Android untuk merekam meeting dengan **transkripsi real-time** dan **ringkasan otomatis**. Cukup satu APK — tidak perlu server atau backend terpisah.
+
+## Fitur
+
+- **Live Recording** — Rekam suara meeting langsung dari HP
+- **Transkrip Real-time** — Teks transkrip muncul langsung saat Anda bicara
+- **Ringkasan Otomatis** — Ringkasan poin penting diperbarui setiap 1 menit
+- **Riwayat Meeting** — Semua transkrip dan ringkasan tersimpan di HP
+- **Konfigurasi Fleksibel** — Ganti model STT/LLM dan API endpoint kapan saja
+- **Simpan Audio** — Opsional: simpan rekaman sebagai file .wav
+
+## Arsitektur
+
+```
+[Android App]
+  ├── AudioRecord → PCM chunk (16kHz mono 16-bit)
+  ├── Encode WAV → HTTP POST → Groq/OpenAI API (STT)
+  ├── Akumulasi teks → HTTP POST → Groq/OpenAI API (LLM)
+  └── Simpan ke SQLite lokal (Room)
+```
+
+**Tidak ada backend.** Semua pemrosesan via API langsung dari HP.
+
+## Tech Stack
+
+| Komponen | Teknologi |
+|----------|-----------|
+| Bahasa | Kotlin |
+| UI | Material 3, Fragment + ViewModel |
+| API Client | OkHttp 4.x |
+| Database | Room (SQLite) |
+| Speech-to-Text | Groq Whisper (`whisper-large-v3-turbo`) |
+| Summarization | Groq Llama (`llama-3-8b-instant`) |
+
+## Build APK
+
+```bash
+cd Sumryfen
+./gradlew assembleDebug
+```
+
+APK output: `app/build/outputs/apk/debug/app-debug.apk`
+
+> Build otomatis juga tersedia via GitHub Actions — buka tab **Actions**, klik **Build APK**, lalu download artifact.
+
+## Pengaturan Awal
+
+Sebelum menggunakan, isi **API Key Groq** di menu Pengaturan:
+1. Daftar/get API key di [console.groq.com](https://console.groq.com)
+2. Buka Pengaturan di aplikasi (ikon gear)
+3. Masukkan API Key STT (dan LLM jika berbeda)
+4. Sesuaikan model jika perlu (default: `whisper-large-v3-turbo` / `llama-3-8b-instant`)
+
+## Credits
+
+Dibuat oleh **Fendi Novtiar** — [github.com/fnidtech](https://github.com/fnidtech)
