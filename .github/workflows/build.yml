@@ -5,11 +5,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch:  # Bisa di-trigger manual dari GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
@@ -26,6 +29,15 @@ jobs:
         with:
           cmdline-tools-version: 11076708
 
+      - name: Install Android SDK platform
+        run: |
+          yes | sdkmanager "platforms;android-34" "build-tools;34.0.0" --sdk_root=$ANDROID_HOME
+        shell: bash
+
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses --sdk_root=$ANDROID_HOME
+        shell: bash
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
@@ -36,9 +48,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Make gradlew executable
+        run: chmod +x Sumryfen/gradlew
+        shell: bash
+
       - name: Build Debug APK
         working-directory: ./Sumryfen
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
