@@ -36,7 +36,7 @@ Aplikasi Android untuk merekam meeting dengan **transkripsi real-time** dan **ri
 
 ## Build APK
 
-### Pakai Android Studio (recommended)
+### Opsi 1: Android Studio (recommended)
 
 1. Clone/download repo ini
 2. Buka Android Studio, pilih **Open an existing project**
@@ -44,14 +44,46 @@ Aplikasi Android untuk merekam meeting dengan **transkripsi real-time** dan **ri
 4. Android Studio otomatis download SDK + dependencies
 5. Klik **Build → Build Bundle(s) / APK → Build APK**
 
-### Atau via Terminal (wajib ada Android SDK)
+### Opsi 2: SDK Command-line Tools (ringan, tanpa IDE)
 
-```bash
-cd Sumryfen
-./gradlew assembleDebug
+**Step 1 — Download & extract Android SDK CLI tools:**
+```powershell
+# Download dari Google
+# https://dl.google.com/android/repository/commandlinetools-win-11076708_latest.zip
+
+# Extract ke folder tetap
+Expand-Archive -Path "$env:USERPROFILE\Downloads\commandlinetools-win-11076708_latest.zip" `
+    -DestinationPath "C:\Android\Sdk\cmdline-tools" -Force
+
+# Rename folder (wajib agar sdkmanager dikenali)
+Rename-Item "C:\Android\Sdk\cmdline-tools\cmdline-tools" "C:\Android\Sdk\cmdline-tools\latest"
 ```
 
-APK output: `app/build/outputs/apk/debug/app-debug.apk`
+**Step 2 — Install platform Android 34:**
+```powershell
+cd "C:\Android\Sdk\cmdline-tools\latest\bin"
+.\sdkmanager "platforms;android-34"
+.\sdkmanager "build-tools;34.0.0"
+.\sdkmanager --licenses
+```
+
+**Step 3 — Set environment variable (sementara):**
+```powershell
+$env:ANDROID_HOME = "C:\Android\Sdk"
+```
+
+**Step 4 — Build APK:**
+```powershell
+cd C:\path\ke\Sumryfen\Sumryfen
+.\gradlew assembleDebug
+```
+
+> Agar tidak perlu set `ANDROID_HOME` tiap kali, buat file `Sumryfen/local.properties` berisi:
+> ```
+> sdk.dir=C:\\Android\\Sdk
+> ```
+
+**APK output:** `Sumryfen/app/build/outputs/apk/debug/app-debug.apk`
 
 ## Pengaturan Awal
 
