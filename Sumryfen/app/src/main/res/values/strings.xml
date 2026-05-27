@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sumryfen</string>
+    <string name="credit_text">Dibuat oleh Fendi Novtiar (github.com/fnidtech)</string>
+    <string name="credit_url">https://github.com/fnidtech</string>
+</resources>
