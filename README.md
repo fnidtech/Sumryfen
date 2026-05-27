@@ -36,14 +36,22 @@ Aplikasi Android untuk merekam meeting dengan **transkripsi real-time** dan **ri
 
 ## Build APK
 
+### Pakai Android Studio (recommended)
+
+1. Clone/download repo ini
+2. Buka Android Studio, pilih **Open an existing project**
+3. Pilih folder `Sumryfen/`
+4. Android Studio otomatis download SDK + dependencies
+5. Klik **Build → Build Bundle(s) / APK → Build APK**
+
+### Atau via Terminal (wajib ada Android SDK)
+
 ```bash
 cd Sumryfen
 ./gradlew assembleDebug
 ```
 
 APK output: `app/build/outputs/apk/debug/app-debug.apk`
-
-> Build otomatis juga tersedia via GitHub Actions — buka tab **Actions**, klik **Build APK**, lalu download artifact.
 
 ## Pengaturan Awal
 
